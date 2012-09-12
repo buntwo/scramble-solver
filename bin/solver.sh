@@ -1,3 +1,3 @@
 #!/bin/sh
 
-cat words | java ScrambleViewer $1
+cat words | java ScrambleSolver $1

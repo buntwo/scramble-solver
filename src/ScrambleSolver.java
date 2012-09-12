@@ -187,7 +187,7 @@ public class ScrambleSolver implements Iterable<Word> {
 		System.out.println("Number of words: " + numWords);
 		System.out.println("Average length: " + avgLen + " letters");
 		System.out.println("Total points: " + totPts);
-		System.out.println("Average points: " + avgPts);
+		System.out.println("Average point per word: " + avgPts);
 	}
 	
 	// print all words in a list
@@ -197,10 +197,33 @@ public class ScrambleSolver implements Iterable<Word> {
 		}
 	}
 	
-	// testing
+	// main function
 	public static void main(String[] args) {
-		
-		ScrambleSolver solver = new ScrambleSolver("ab\"dc\"a'bc''oabcdab'cd");
-		
+		ScrambleSolver ss = new ScrambleSolver(args[0]);
+		//ss.printWords();
+		int[] mults = ss.getMultipliers();
+		String board = ss.getBoard();
+
+		boolean debug = false;
+		if(debug) {
+			// print board
+			for(int i = 1; i <= 16; ++i) {
+				System.out.print(board.substring(i-1,i)+mults[i-1]+" ");
+				if(i%4==0)
+					System.out.println();
+			}
+		}
+
+		// print all words and point values and paths
+		for(Word w : ss) {
+			System.out.print(w.getWord() + " ");
+			System.out.print(w.getScore() + " ");
+			Integer[] path = w.getPath();
+			System.out.print(path[0]);
+			for(int i = 1; i < path.length; ++i)
+				System.out.print("-" + path[i]);
+			System.out.println();
+		}
+		ss.printStats();
 	}
 }
