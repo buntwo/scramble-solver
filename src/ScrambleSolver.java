@@ -217,12 +217,13 @@ public class ScrambleSolver implements Iterable<Word> {
 		System.out.println(board.toUpperCase());
 		// print all words and point values and paths
 		for(Word w : ss) {
-			//System.out.print(w.getWord() + " ");
-			//System.out.print(w.getScore() + " ");
+
 			Integer[] path = w.getPath();
 			System.out.print(path[0]);
 			for(int i = 1; i < path.length; ++i)
 				System.out.print(" " + path[i]);
+			System.out.print(" " + w.getWord().toUpperCase());
+			System.out.print(" " + w.getScore());
 			System.out.println();
 		}
 		
