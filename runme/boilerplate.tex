@@ -1,0 +1,85 @@
+\documentclass{article}
+\usepackage[landscape, margin=0cm, paperheight=21cm, paperwidth=21cm]{geometry}
+\usepackage{nopageno}
+\usepackage{ifthen}
+\usepackage{tikz}
+\usepackage{fix-cm}
+
+
+% CONFIGURABLE OPTIONS 
+%
+% The following *positive integer* specifies how large a box should
+% be.
+\def\totaldimension{10}
+% The following specifies the font style
+\def\letterfont{\fontsize{130}{0}\ttfamily\selectfont}
+% The following specifies the arrow color
+\def\arrowcolor{orange}
+% The following specifies other arrow properties
+\def\arrowheadstyle{latex}
+\def\arrowlinewidth{10pt}
+% The following number controls the opacity of the first arrow.
+% Should be a number real number x in [0,1].
+\def\startingopacity{1}
+% The following controls the fill color of the initial and final
+% cells.
+\tikzstyle{initialcellstyle} = [fill=green!50, draw=black, opacity=.5]
+\tikzstyle{finalcellstyle} = [fill=red!50, draw=black, opacity=.5]
+% Uncomment if you want to see debug grids
+%\newcommand{\debugme}{}
+
+
+%---------------------------------------------------------------
+% Do not touch the following unless you know what you are doing.
+%---------------------------------------------------------------
+\def\topx{-\totaldimension}
+\def\topy{\totaldimension}
+\def\botx{\totaldimension}
+\def\boty{-\totaldimension}
+\newcounter{boardindex}
+\providecommand{\StartX}{0}
+\providecommand{\StartY}{0}
+\newcommand{\drawone}[2]{\draw (#1, #2) node {\usebox{\one}};}
+\newcommand{\drawnegone}[2]{\draw (#1, #2) node {\usebox{\negone}};}
+\newcommand{\drawthree}[2]{\draw (#1, #2) node {\usebox{\three}};}
+\newcommand{\drawnegthree}[2]{\draw (#1, #2) node {\usebox{\negthree}};}
+\newcommand{\drawfour}[2]{\draw (#1, #2) node {\usebox{\four}};}
+\newcommand{\drawnegfour}[2]{\draw (#1, #2) node {\usebox{\negfour}};}
+\newcommand{\drawfive}[2]{\draw (#1, #2) node {\usebox{\five}};}
+\newcommand{\drawnegfive}[2]{\draw (#1, #2) node {\usebox{\negfive}};}
+\newcommand{\drawinitialcell}[2]{\draw (#1, #2) node {\usebox{\initcell}};}
+\newcommand{\drawfinalcell}[2]{\draw (#1, #2) node {\usebox{\finalcell}};}
+% Cell dimension is the height/width of each cell
+% in centimeters. It is given by
+% min (floor((botx - topx)/4), floor((topy - boty)/4)
+\def\celldimension{5}
+%---------------------------------------------------------------
+% Do not touch the above unless you know what you are doing.
+%---------------------------------------------------------------
+
+% These are fallback definitions.  When drawing a board, the following
+% must be specified as "arguments":
+% 
+% \BOARD -- the game board, an array of 16 strings.  
+%
+% \LOCAT -- an array of numbers in the order which the board will be
+% traversed
+%
+% \LISTLENGTH -- a single number equal to [length(LOCAT) - 2];
+\providecommand{\BOARD}{{"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P"}}
+\providecommand{\drawarrows}{\drawone{0}{0}\drawinitialcell{0}{0}}
+
+%% Start producing this way.
+\providecommand{\PRODUCEPAGE}{\input{drawboard}}
+\providecommand{\PRODUCEDOCUMENT}{\PRODUCEPAGE}
+
+
+\begin{document}
+\input{makeboard}
+\PRODUCEDOCUMENT
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

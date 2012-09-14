@@ -1,0 +1,30 @@
+---> EXAMPLE RUN <----
+**********************
+
+Run the command:
+
+python PRODUCER.py testinput
+
+*************************************
+
+---> DETAILS <----
+*******************
+
+Use
+
+python PRODUCE.py filename
+
+where filename is a file containing the input.
+
+
+The input file must be in the format:
+
+<----- 16 characters ---->
+# # # # # # # # 
+# # # # # # # # # # 
+
+where # is any number from 0 to 15, corresponding to the board.
++ Each number is separated by a space.
++ Each solution is separated by a line.
+
+Check the provide "testinput" for an example.

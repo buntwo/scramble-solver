@@ -1,0 +1,198 @@
+\newsavebox{\gameboard}
+\savebox{\gameboard}{
+  \begin{tikzpicture}[thick,scale=1]
+    \setcounter{boardindex}{0}
+    % Here we first draw a grid to help us debug.
+    % The grid is drawn here:
+    \ifthenelse{\isundefined{\debugme}}
+    {}
+    {\draw[step=1cm,gray,very thin] (-10,-10) grid (10,10);}
+
+    % Cartesian coordinates are added here:
+    \ifthenelse{\isundefined{\debugme}}
+    {}
+    {
+    \foreach \x in {-9,...,9}
+    \foreach \y in {-9,...,9}
+    {
+      \draw (\x, \y) node {{\tiny (\x, \y)}};
+    }
+    }
+    
+    % Calculate the dimensions of each square. 
+    % We need to draw a 4x4 tableau, such that it is
+    % horizontally and vertically centered at
+    % the origin, and such that the each cell in
+    % tableau is as large as possible.
+    %
+    % We require each cell to have an integral
+    % dimension. Thus, the dimension is equal to
+    % celldimension = 
+    % min( floor( (\botx - \topx)/4 ), floor( (\topy - \boty)/4 ))
+    
+    % Uncomment below to regenerate ....
+    % +++++++++++++++++++++++++++++++++++
+    %\pgfmathparse{min( floor( (\botx - \topx)/4 ), floor( (\topy -
+    %  \boty)/4 ))};
+    %\let\celldimension\pgfmathresult
+    % +++++++++++++++++++++++++++++++++++
+    
+
+    % Now we draw the tableau, starting at
+    % top left = (-2 * \celldimension, 2 * \celldimension)
+    % and ending at
+    % bottom right = (2 * \celldimension, -2 * \celldimension)
+
+    % We loop unroll instead to make this faster.
+    % +++++++++++++++++++++++++++++++++++
+    \foreach \x in {-2,-1, 0, 1}
+    \foreach \y in {2,1, 0, -1}
+    {
+      \draw (\x * \celldimension, \y * \celldimension)
+      rectangle +(\celldimension, -\celldimension);
+    }
+    % +++++++++++++++++++++++++++++++++++
+
+    % Now we fill in the board text. Each character is to be centered
+    % in each box, using the formulas:
+    % 
+    % mid_x = (right_x + left_x)/2
+    % mid_y = (above_y + below_y)/2
+    %
+    % The board text is taken from the global array \BOARD. The
+    % variable boardindex will index which character to put in the
+    % current cell.
+    %
+
+    {
+    \letterfont
+
+    % Go through the tableau and draw the board
+    \foreach \y in {2,1, 0, -1}
+    \foreach \x in {-2,-1, 0, 1}
+    {
+      \pgfmathparse{(\x + .5) * \celldimension};
+      \let\midx\pgfmathresult
+
+      \pgfmathparse{(\y - .5) * \celldimension};
+      \let\midy\pgfmathresult
+      
+      \draw (\midx, \midy) node 
+      {\pgfmathparse{\BOARD[\arabic{boardindex}]}\pgfmathresult};
+      
+      \stepcounter{boardindex}
+    }
+    }
+  \end{tikzpicture}
+}
+
+\newsavebox{\negone}
+\newsavebox{\one}
+\newsavebox{\negthree}
+\newsavebox{\three}
+\newsavebox{\negfour}
+\newsavebox{\four}
+\newsavebox{\negfive}
+\newsavebox{\five}
+
+
+\savebox{\negone}{
+  \begin{tikzpicture}
+    \draw[-\arrowheadstyle, 
+    line width=\arrowlinewidth,
+    color=\arrowcolor,
+    opacity=\startingopacity]
+    (0,0) -- +(-\celldimension, 0) node[thin, right] {};
+  \end{tikzpicture}
+}
+
+\savebox{\one}{
+  \begin{tikzpicture}
+    \draw[-\arrowheadstyle, 
+    line width=\arrowlinewidth,
+    color=\arrowcolor,
+    opacity=\startingopacity]
+    (0,0) -- +(\celldimension, 0) node[thin, right] {};
+  \end{tikzpicture}
+}
+
+\savebox{\negthree}{
+  \begin{tikzpicture}
+    \draw[-\arrowheadstyle, 
+    line width=\arrowlinewidth,
+    color=\arrowcolor,
+    opacity=\startingopacity]
+    (0,0) -- +(\celldimension, \celldimension) node[thin, right] {};
+  \end{tikzpicture}
+}
+
+\savebox{\three}{
+  \begin{tikzpicture}
+    \draw[-\arrowheadstyle, 
+    line width=\arrowlinewidth,
+    color=\arrowcolor,
+    opacity=\startingopacity]
+    (0,0) -- +(-\celldimension, -\celldimension) node[thin, right] {};
+  \end{tikzpicture}
+}
+
+\savebox{\negfour}{
+  \begin{tikzpicture}
+    \draw[-\arrowheadstyle, 
+    line width=\arrowlinewidth,
+    color=\arrowcolor,
+    opacity=\startingopacity]
+    (0,0) -- +(0, \celldimension) node[thin, right] {};
+  \end{tikzpicture}
+}
+
+\savebox{\four}{
+  \begin{tikzpicture}
+    \draw[-\arrowheadstyle, 
+    line width=\arrowlinewidth,
+    color=\arrowcolor,
+    opacity=\startingopacity]
+    (0,0) -- +(0, -\celldimension) node[thin, right] {};
+  \end{tikzpicture}
+}
+
+\savebox{\negfive}{
+  \begin{tikzpicture}
+    \draw[-\arrowheadstyle, 
+    line width=\arrowlinewidth,
+    color=\arrowcolor,
+    opacity=\startingopacity]
+    (0,0) -- +(-\celldimension, \celldimension) node[thin, right] {};
+  \end{tikzpicture}
+}
+
+\savebox{\five}{
+  \begin{tikzpicture}
+    \draw[-\arrowheadstyle, 
+    line width=\arrowlinewidth,
+    color=\arrowcolor,
+    opacity=\startingopacity]
+    (0,0) -- +(\celldimension, -\celldimension) node[thin, right] {};
+  \end{tikzpicture}
+}
+
+\newsavebox{\initcell}
+\newsavebox{\finalcell}
+
+\savebox{\initcell}{
+  \begin{tikzpicture}
+    \filldraw[initialcellstyle] 
+    (0,0)
+    rectangle
+    +(\celldimension, -\celldimension);
+  \end{tikzpicture}
+}
+
+\savebox{\finalcell}{
+  \begin{tikzpicture}
+    \filldraw[finalcellstyle] 
+    (0,0)
+    rectangle
+    +(\celldimension, -\celldimension);
+  \end{tikzpicture}
+}

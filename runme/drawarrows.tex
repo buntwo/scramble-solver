@@ -1,0 +1,26 @@
+\begin{center}
+\begin{tikzpicture}
+  \node[inner sep=0pt] {\includegraphics[scale=1]{board.pdf}};
+    % Here we first draw a grid to help us debug.
+    % The grid is drawn here:
+    \ifthenelse{\isundefined{\debugme}}
+    {}
+    {\draw[step=1cm,gray,very thin] (-10,-10) grid (10,10);}
+
+    % Cartesian coordinates are added here:
+    \ifthenelse{\isundefined{\debugme}}
+    {}
+    {
+    \foreach \x in {-9,...,9}
+    \foreach \y in {-9,...,9}
+    {
+      \draw (\x, \y) node {{\tiny (\x, \y)}};
+    }
+    }
+
+\end{tikzpicture}
+\end{center}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% End: 
