@@ -214,7 +214,7 @@ public class ScrambleSolver implements Iterable<Word> {
 			}
 		}
 		
-		System.out.println(board);
+		System.out.println(board.toUpperCase());
 		// print all words and point values and paths
 		for(Word w : ss) {
 			//System.out.print(w.getWord() + " ");
